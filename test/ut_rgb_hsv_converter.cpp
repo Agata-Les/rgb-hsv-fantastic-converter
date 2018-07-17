@@ -5,7 +5,11 @@
 namespace constant
 {
 	const std::pair<RGB, HSV> black = { {0, 0, 0}, {0, 0, 0} };
-	const std::vector<std::pair<RGB, HSV>> correctInputs { black };
+	const std::pair<RGB, HSV> white = { {255, 255, 255}, {0, 0, 100} };
+	const std::pair<RGB, HSV> red = { {255, 0, 0}, {0, 100, 100} };
+	const std::pair<RGB, HSV> green = { {0, 255, 0}, {120, 100, 100} };
+	const std::pair<RGB, HSV> blue = { {0, 0, 255}, {240, 100, 100} };
+	const std::vector<std::pair<RGB, HSV>> correctInputs { black, white, red, green, blue };
 }
 
 class ut_rgb_hsv_converter : public ::testing::TestWithParam<std::pair<RGB, HSV>>

@@ -2,14 +2,16 @@
 
 #include <vector>
 
-struct RGB {
+struct RGB
+{
 	unsigned short int Red;
 	unsigned short int Green;
 	unsigned short int Blue;
 };
 
-struct HSV {
-	unsigned int Hue;
+struct HSV
+{
+	signed int Hue;
 	unsigned short int Saturation;
 	unsigned short int Value;
 };
