@@ -27,3 +27,6 @@ inline bool operator ==(const HSV & lhs, const HSV & rhs)
 }
 
 HSV convert_RGB_to_HSV(const RGB & RGBValues);
+unsigned short int calculateValue(const int max);
+unsigned short int calculateHue(const int min, const int max, const RGB & val);
+unsigned short int calculateSaturation(const int min, const int max, const RGB & val);
