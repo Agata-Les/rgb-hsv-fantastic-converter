@@ -4,9 +4,9 @@ HSV convert_RGB_to_HSV(const RGB & RGBValues)
 {
 	HSV result {};
 
-	result.Value = calculateValue(RGBValues.getMax());
+	result.Value = calculateValue(RGBValues.maximum);
 	result.Hue = calculateHue(RGBValues);
-	result.Saturation = calculateSaturation(RGBValues.getMin(), RGBValues.getMax());
+	result.Saturation = calculateSaturation(RGBValues.minimum, RGBValues.maximum);
 
 	return result;
 }
@@ -18,26 +18,23 @@ unsigned short int calculateValue(const unsigned short int max)
 
 unsigned short int calculateHue(const RGB & val)
 {
-	const unsigned short int min = val.getMin();
-	const unsigned short int max = val.getMax();
-
-	if(min == max) return 0;
+	if(val.minimum == val.maximum) return 0;
 
 	int resultHue { 0 };
 
-	if(max == val.Red)
+	if(val.maximum == val.Red)
 	{
-		resultHue = 0 + ((val.Green - val.Blue) * 60) / (max - min);
+		resultHue = 0 + ((val.Green - val.Blue) * 60) / (val.maximum - val.minimum);
 	}
 
-	if(max == val.Green)
+	if(val.maximum == val.Green)
 	{
-		resultHue = 120 + ((val.Blue - val.Red) * 60) / (max - min);
+		resultHue = 120 + ((val.Blue - val.Red) * 60) / (val.maximum - val.minimum);
 	}
 
-	if(max == val.Blue)
+	if(val.maximum == val.Blue)
 	{
-		resultHue = 240 + ((val.Red - val.Green) * 60) / (max - min);
+		resultHue = 240 + ((val.Red - val.Green) * 60) / (val.maximum - val.minimum);
 	}
 	
 	return resultHue < 0 ? resultHue += 360 : resultHue;
