@@ -1,27 +1,47 @@
 #include "rgb_hsv_converter.h"
 #include <utility>
 
+unsigned short int RGB::calculateMin()
+{
+	return std::min(std::min(Red, Blue), Green);
+}
+
+unsigned short int RGB::calculateMax()
+{
+	return std::max(std::max(Red, Blue), Green);
+}
+
+unsigned short int RGB::getMin() const
+{
+	return minimum;
+}
+
+unsigned short int RGB::getMax() const
+{
+	return maximum;
+}
+
 HSV convert_RGB_to_HSV(const RGB & RGBValues)
 {
 	HSV result {};
 
-	const int minimalValueOfColour = std::min(std::min(RGBValues.Red, RGBValues.Blue), RGBValues.Green);
-	const int maximalValueOfColour = std::max(std::max(RGBValues.Red, RGBValues.Blue), RGBValues.Green);
-
-	result.Value = calculateValue(maximalValueOfColour);
-	result.Hue = calculateHue(minimalValueOfColour, maximalValueOfColour, RGBValues);
-	result.Saturation = calculateSaturation(minimalValueOfColour, maximalValueOfColour, RGBValues);
+	result.Value = calculateValue(RGBValues.getMax());
+	result.Hue = calculateHue(RGBValues);
+	result.Saturation = calculateSaturation(RGBValues.getMin(), RGBValues.getMax());
 
 	return result;
 }
 
-unsigned short int calculateValue(const int max)
+unsigned short int calculateValue(const unsigned short int max)
 {
 	return (100 * max) / 255;
 }
 
-unsigned short int calculateHue(const int min, const int max, const RGB & val)
+unsigned short int calculateHue(const RGB & val)
 {
+	const unsigned short int min = val.getMin();
+	const unsigned short int max = val.getMax();
+
 	if(min == max) return 0;
 
 	int resultHue { 0 };
@@ -44,7 +64,7 @@ unsigned short int calculateHue(const int min, const int max, const RGB & val)
 	return resultHue < 0 ? resultHue += 360 : resultHue;
 }
 
-unsigned short int calculateSaturation(const int min, const int max, const RGB & val)
+unsigned short int calculateSaturation(const unsigned short int min, const unsigned short int max)
 {
 	if(max == 0) return 0;
 
