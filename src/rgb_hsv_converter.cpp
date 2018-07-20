@@ -1,25 +1,4 @@
 #include "rgb_hsv_converter.h"
-#include <utility>
-
-unsigned short int RGB::calculateMin()
-{
-	return std::min(std::min(Red, Blue), Green);
-}
-
-unsigned short int RGB::calculateMax()
-{
-	return std::max(std::max(Red, Blue), Green);
-}
-
-unsigned short int RGB::getMin() const
-{
-	return minimum;
-}
-
-unsigned short int RGB::getMax() const
-{
-	return maximum;
-}
 
 HSV convert_RGB_to_HSV(const RGB & RGBValues)
 {

@@ -3,8 +3,8 @@ project(rgb-hsv-fantastic-converter)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
 
-set(TARGET_SRC ./src/rgb_hsv_converter.cpp)
-set(TARGET_INC ./inc/rgb_hsv_converter.h)
+set(TARGET_SRC ./src/rgb_hsv_converter.cpp ./src/rgb.cpp ./src/hsv.cpp)
+set(TARGET_INC ./inc/rgb_hsv_converter.h ./inc/rgb.h ./inc/hsv.h)
 set(TARGET_GTEST ./test/ut_rgb_hsv_converter.cpp)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
