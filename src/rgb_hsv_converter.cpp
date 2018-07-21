@@ -1,4 +1,6 @@
 #include "rgb_hsv_converter.h"
+#include <cstdlib>
+#include <cmath>
 
 HSV convert_RGB_to_HSV(const RGB & RGBValues)
 {
@@ -11,38 +13,48 @@ HSV convert_RGB_to_HSV(const RGB & RGBValues)
 	return result;
 }
 
-unsigned short int calculateValue(const unsigned short int max)
+RGB convert_HSV_to_RGB(const HSV & HSVValues)
 {
-	return (100 * max) / 255;
+	const float chroma = HSVValues.Value * HSVValues.Saturation;
+	const float minimum = 100 * HSVValues.Value - chroma;
+
+	float x = chroma * (1.0 - std::abs(std::fmod(HSVValues.Hue/60, 2.0) - 1.0));
+
+	return {0, 0, 0};
+}
+
+float calculateValue(const unsigned short int max)
+{
+	return std::round((100.0 * max) / 255.0 * 10) / 10;
 }
 
 unsigned short int calculateHue(const RGB & val)
 {
 	if(val.minimum == val.maximum) return 0;
 
-	int resultHue { 0 };
+	float resultHue { 0 };
 
 	if(val.maximum == val.Red)
 	{
-		resultHue = 0 + ((val.Green - val.Blue) * 60) / (val.maximum - val.minimum);
+		resultHue = 0.0 + ((val.Green - val.Blue) * 60.0) / (val.maximum - val.minimum);
 	}
 
 	if(val.maximum == val.Green)
 	{
-		resultHue = 120 + ((val.Blue - val.Red) * 60) / (val.maximum - val.minimum);
+		resultHue = 120.0 + ((val.Blue - val.Red) * 60.0) / (val.maximum - val.minimum);
 	}
 
 	if(val.maximum == val.Blue)
 	{
-		resultHue = 240 + ((val.Red - val.Green) * 60) / (val.maximum - val.minimum);
+		resultHue = 240.0 + ((val.Red - val.Green) * 60.0) / (val.maximum - val.minimum);
 	}
 	
-	return resultHue < 0 ? resultHue += 360 : resultHue;
+	return resultHue < 0 ? std::round(resultHue += 360) : std::round(resultHue);
 }
 
-unsigned short int calculateSaturation(const unsigned short int min, const unsigned short int max)
+float calculateSaturation(const unsigned short int min, const unsigned short int max)
 {
-	if(max == 0) return 0;
+	if(max == 0) return 0.0;
 
-	return (max - min) * 100 / max;
+	return std::round((max - min) * 100.0 / max * 10) / 10;
 }

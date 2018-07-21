@@ -1,5 +1,4 @@
 #include "rgb.h"
-#include <utility>
 #include <algorithm>
 
 unsigned short int RGB::calculateMin()
