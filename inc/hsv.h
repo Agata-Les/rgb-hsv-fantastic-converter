@@ -2,7 +2,13 @@
 
 struct HSV
 {
-	unsigned short int Hue;
+	HSV(float Hue_, float Saturation_, float Value_) : Hue(Hue_),
+													   Saturation(Saturation_),
+													   Value(Value_)
+	{
+	}
+	
+	float Hue;
 	float Saturation;
 	float Value;
 };
