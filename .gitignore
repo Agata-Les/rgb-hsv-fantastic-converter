@@ -36,5 +36,6 @@ CMakeFiles/
 Makefile
 cmake_install.cmake
 runTests
+example
 .DS_Store
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ostream>
+
 struct RGB
 {
 	RGB(unsigned short int Red_, unsigned short int Green_, unsigned short int Blue_) : Red(Red_), 
@@ -12,6 +14,7 @@ struct RGB
 
 	bool operator ==(const RGB & rhs) const;
 	bool operator !=(const RGB & rhs) const;
+	friend std::ostream & operator <<(std::ostream & stream, const RGB & rgbColour);
 
 	const unsigned short int getRed() const;
 	const unsigned short int getGreen() const;

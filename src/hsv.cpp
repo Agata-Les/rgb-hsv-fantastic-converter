@@ -10,6 +10,11 @@ bool HSV::operator !=(const HSV & rhs) const
 	return this->Hue != rhs.Hue || this->Saturation != rhs.Saturation || this->Value != rhs.Value;
 }
 
+std::ostream & operator <<(std::ostream & stream, const HSV & hsvColour)
+{
+	return stream<<"{ "<<hsvColour.Hue<<", "<<hsvColour.Saturation<<", "<<hsvColour.Value<<" }";
+}
+
 const float HSV::getHue() const
 {
 	return Hue;

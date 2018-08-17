@@ -11,6 +11,11 @@ bool RGB::operator !=(const RGB & rhs) const
 	return this->Red != rhs.Red || this->Green != rhs.Green || this->Blue != rhs.Blue;
 }
 
+std::ostream & operator <<(std::ostream & stream, const RGB & rgbColour)
+{
+	return stream<<"{ "<<rgbColour.Red<<", "<<rgbColour.Green<<", "<<rgbColour.Blue<<" }";
+}
+
 unsigned short int RGB::calculateMin()
 {
 	return std::min(std::min(Red, Blue), Green);
@@ -45,4 +50,3 @@ const unsigned short int RGB::getMin() const
 {
 	return minimum;
 }
-
