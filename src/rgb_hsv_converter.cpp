@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <cmath>
 #include <cassert>
-#include <iostream>
 
 inline bool isInRange(float value, int min, int max)
 {
@@ -11,31 +10,31 @@ inline bool isInRange(float value, int min, int max)
 
 HSV convert_RGB_to_HSV(const RGB & RGBValues)
 {
-	float value = calculateValue(RGBValues.maximum);
+	float value = calculateValue(RGBValues.getMax());
 	float hue = calculateHue(RGBValues);
-	float saturation = calculateSaturation(RGBValues.minimum, RGBValues.maximum);
+	float saturation = calculateSaturation(RGBValues.getMin(), RGBValues.getMax());
 
 	return { hue, saturation, value };
 }
 
 RGB convert_HSV_to_RGB(const HSV & HSVValues)
 {
-	assert(HSVValues.Hue <= 360);
+	assert(HSVValues.getHue() <= 360);
 
-	const float chroma = ( HSVValues.Value / 100.0 ) * ( HSVValues.Saturation / 100.0 );
-	const float min = HSVValues.Value / 100.0 - chroma;
-	const float intermed = chroma * (1.0 - std::fabs(std::fmod(HSVValues.Hue / 60.0, 2.0) - 1.0));
+	const float chroma = ( HSVValues.getValue() / 100.0 ) * ( HSVValues.getSaturation() / 100.0 );
+	const float min = HSVValues.getValue() / 100.0 - chroma;
+	const float intermed = chroma * (1.0 - std::fabs(std::fmod(HSVValues.getHue() / 60.0, 2.0) - 1.0));
 
 	const unsigned int cm = std::round((chroma + min) * 255);
 	const unsigned int xm = std::round((intermed + min) * 255);
 	const unsigned int mi = std::round(min * 255);
 
-	if(isInRange(HSVValues.Hue, 0, 60)) return RGB(cm, xm, mi);
-	if(isInRange(HSVValues.Hue, 60, 120)) return RGB(xm, cm, mi);
-	if(isInRange(HSVValues.Hue, 120, 180)) return RGB(mi, cm, xm);
-	if(isInRange(HSVValues.Hue, 180, 240)) return RGB(mi, xm, cm);
-	if(isInRange(HSVValues.Hue, 240, 300)) return RGB(xm, mi, cm);
-	if(isInRange(HSVValues.Hue, 300, 360)) return RGB(cm, mi, xm);
+	if(isInRange(HSVValues.getHue(), 0, 60)) return RGB(cm, xm, mi);
+	if(isInRange(HSVValues.getHue(), 60, 120)) return RGB(xm, cm, mi);
+	if(isInRange(HSVValues.getHue(), 120, 180)) return RGB(mi, cm, xm);
+	if(isInRange(HSVValues.getHue(), 180, 240)) return RGB(mi, xm, cm);
+	if(isInRange(HSVValues.getHue(), 240, 300)) return RGB(xm, mi, cm);
+	if(isInRange(HSVValues.getHue(), 300, 360)) return RGB(cm, mi, xm);
 
 	return RGB(mi, mi, mi);
 }
@@ -47,23 +46,23 @@ float calculateValue(const unsigned short int max)
 
 unsigned short int calculateHue(const RGB & val)
 {
-	if(val.minimum == val.maximum) return 0;
+	if(val.getMin() == val.getMax()) return 0;
 
 	float resultHue { 0.0 };
 
-	if(val.maximum == val.Red)
+	if(val.getMax() == val.getRed())
 	{
-		resultHue = 0.0 + ((val.Green - val.Blue) * 60.0) / (val.maximum - val.minimum);
+		resultHue = 0.0 + ((val.getGreen() - val.getBlue()) * 60.0) / (val.getMax() - val.getMin());
 	}
 
-	if(val.maximum == val.Green)
+	if(val.getMax() == val.getGreen())
 	{
-		resultHue = 120.0 + ((val.Blue - val.Red) * 60.0) / (val.maximum - val.minimum);
+		resultHue = 120.0 + ((val.getBlue() - val.getRed()) * 60.0) / (val.getMax() - val.getMin());
 	}
 
-	if(val.maximum == val.Blue)
+	if(val.getMax() == val.getBlue())
 	{
-		resultHue = 240.0 + ((val.Red - val.Green) * 60.0) / (val.maximum - val.minimum);
+		resultHue = 240.0 + ((val.getRed() - val.getGreen()) * 60.0) / (val.getMax() - val.getMin());
 	}
 	
 	return resultHue < 0 ? std::round(resultHue += 360.0) : std::round(resultHue);

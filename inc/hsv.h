@@ -7,18 +7,16 @@ struct HSV
 													   Value(Value_)
 	{
 	}
-	
+
+	bool operator ==(const HSV & rhs) const;
+	bool operator !=(const HSV & rhs) const;
+
+	const float getHue() const;
+	const float getSaturation() const;
+	const float getValue() const;
+
+private:
 	float Hue;
 	float Saturation;
 	float Value;
 };
-
-inline bool operator ==(const HSV & lhs, const HSV & rhs)
-{
-	return lhs.Hue == rhs.Hue && lhs.Saturation == rhs.Saturation && lhs.Value == rhs.Value;
-}
-
-inline bool operator !=(const HSV & lhs, const HSV & rhs)
-{
-	return lhs.Hue != rhs.Hue || lhs.Saturation != rhs.Saturation || lhs.Value != rhs.Value;
-}

@@ -10,6 +10,17 @@ struct RGB
 	{		
 	}
 
+	bool operator ==(const RGB & rhs) const;
+	bool operator !=(const RGB & rhs) const;
+
+	const unsigned short int getRed() const;
+	const unsigned short int getGreen() const;
+	const unsigned short int getBlue() const;
+
+	const unsigned short int getMax() const;
+	const unsigned short int getMin() const;
+
+protected:
 	const unsigned short int Red;
 	const unsigned short int Green;
 	const unsigned short int Blue;
@@ -17,17 +28,6 @@ struct RGB
 	const unsigned short int minimum;
 	const unsigned short int maximum;
 
-private:
 	unsigned short int calculateMin();
 	unsigned short int calculateMax();
 };
-
-inline bool operator ==(const RGB & lhs, const RGB & rhs)
-{
-	return lhs.Red == rhs.Red && lhs.Green == rhs.Green && lhs.Blue == rhs.Blue;
-}
-
-inline bool operator !=(const RGB & lhs, const RGB & rhs)
-{
-	return lhs.Red != rhs.Red || lhs.Green != rhs.Green || lhs.Blue != rhs.Blue;
-}
